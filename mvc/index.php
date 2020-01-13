@@ -1,3 +1,3 @@
 <?php
-  header('controler/Main.ctrl.php');
+  header('Location: ./controler/Main.ctrl.php');
  ?>

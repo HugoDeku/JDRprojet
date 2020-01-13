@@ -1,3 +1,3 @@
 <?php
-  include("../view/Accueil.view.php");
+  include "../view/Accueil.view.php";
 ?>
