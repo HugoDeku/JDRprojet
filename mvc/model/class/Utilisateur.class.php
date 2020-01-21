@@ -3,10 +3,11 @@
   class Utilisateur{
 
     private $pseudo;
+    private $mdp;
     private $droit;
     private $listePersonnages;
 
-    function __construct($pseudo, $droit = "aucun" ,$listePersonnages = NULL)
+    function __construct($pseudo, $mdp, $droit = "aucun" ,$listePersonnages = NULL)
     {
       $this->pseudo = $pseudo;
       $this->droit = $droit;

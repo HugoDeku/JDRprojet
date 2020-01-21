@@ -1,7 +1,8 @@
 BEGIN;
 CREATE TABLE Compte(
   Pseudo VARCHAR(30) PRIMARY KEY,
-  Mdp TEXT
+  Mdp TEXT,
+  Droit TEXT
 );
 
 CREATE TABLE Dieu(
@@ -11,22 +12,7 @@ CREATE TABLE Dieu(
 CREATE TABLE Magie(
   NomMagie VARCHAR(30) PRIMARY KEY,
   Affinite VARCHAR(30),
-  FOREIGN KEY Affinite REFERENCES Dieu(NomDieu)
-);
-
-CREATE TABLE Personnage(
-  Nom VARCHAR(30),
-  Prenom VARCHAR(30),
-  Age INTEGER,
-  Magie VARCHAR(30),
-  Sexe VARCHAR(30) CHECK (Sexe = "Homme" OR Sexe="Femme"),
-  Taille FLOAT,
-  Poids FLOAT,
-  PNJ VARCHAR(1) CHECK(PNJ = "T" OR PNJ = "F"),
-  Race VARCHAR(30),
-  Lore TEXT,
-  PRIMARY KEY (Nom,Prenom),
-  FOREIGN KEY Magie REFERENCES Magie(NomMagie)
+  FOREIGN KEY (Affinite) REFERENCES Dieu(NomDieu)
 );
 
 CREATE TABLE Race(
@@ -36,13 +22,20 @@ CREATE TABLE Race(
   Description TEXT
 );
 
-CREATE TABLE JoueurPerso(
-  Pseudo VARCHAR(30),
+CREATE TABLE Personnage(
   Nom VARCHAR(30),
   Prenom VARCHAR(30),
-  FOREIGN KEY (Pseudo) REFERENCES Compte(Pseudo),
-  FOREIGN KEY (Nom, Prenom) REFERENCES Personnage(Nom, Prenom),
-  PRIMARY KEY (Pseudo, Nom, Prenom)
+  Age INTEGER,
+  Magie VARCHAR(30),
+  Sexe VARCHAR(5) CHECK (Sexe = "Homme" OR Sexe="Femme"),
+  Taille FLOAT,
+  Poids FLOAT,
+  PNJ VARCHAR(1) CHECK(PNJ = "T" OR PNJ = "F"),
+  Race VARCHAR(30),
+  Lore TEXT,
+  PRIMARY KEY (Nom,Prenom),
+  FOREIGN KEY (Magie) REFERENCES Magie(NomMagie),
+  FOREIGN KEY (Race) REFERENCES Race(Nom)
 );
 
 CREATE TABLE Stats(
@@ -54,11 +47,20 @@ CREATE TABLE Stats(
   Mana INTEGER
 );
 
+CREATE TABLE JoueurPerso(
+  Pseudo VARCHAR(30),
+  Nom VARCHAR(30),
+  Prenom VARCHAR(30),
+  FOREIGN KEY (Pseudo) REFERENCES Compte(Pseudo),
+  FOREIGN KEY (Nom, Prenom) REFERENCES Personnage(Nom, Prenom),
+  PRIMARY KEY (Pseudo, Nom, Prenom)
+);
+
 CREATE TABLE Spells(
-  NomMagie VARCHAR(30),
   NomSpell VARCHAR(30) PRIMARY KEY,
+  NomMagie VARCHAR(30),
   DescSpell TEXT,
-  FOREIGN KEY NomMagie REFERENCES Magie(NomMagie)
+  FOREIGN KEY (NomMagie) REFERENCES Magie(NomMagie)
 );
 
 COMMIT;
