@@ -11,7 +11,12 @@
     {
       $this->pseudo = $pseudo;
       $this->droit = $droit;
-      $this->listePersonnages = $listePersonnages;
+      if($listePersonnages != NULL){
+        $this->listePersonnages = $listePersonnages;
+      }else{
+        $this->listePersonnages = array();
+      }
+      
     }
 
     public function getPseudo()

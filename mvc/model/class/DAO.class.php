@@ -19,12 +19,14 @@ class DAO{
 
   //Fonction Utilisateur
   function getAllUsers(){
-    $req = $this->db->prepare("SELECT * FROM COMPTE");
-
-    $req->execute();
-    
-    $recup = $req->fetchAll(PDO::FETCH_CLASS, "Utilisateur");
-    return $recup;
+    $req = "SELECT * FROM COMPTE";
+    $lancement = $this->db->query($req);
+    $recup = $lancement->fetchAll();
+    $users = array();
+    foreach($recup as $val){
+      array_push($users, new Utilisateur($val['Pseudo'], $val['Mdp']));
+    }
+    return $users;
   }
   function getUserByName($name){
     $req = "SELECT * FROM Compte WHERE pseudo = '$name'";
